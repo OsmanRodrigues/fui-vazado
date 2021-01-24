@@ -24,7 +24,25 @@ describe('LeakController - REST', () => {
     expect(savedLeak).toEqual(leak);
   });
 
-  it.skip('should return 500 when there is any error other than validation error', async () => {
-    //TODO think in a way to throw a 500
+  it('should not return a leak if database has not data associated', async () => {
+    await repository.save(createLeakMock({ cpf: '00000000000' }));
+
+    const response = await global.testRequest
+      .post('/api/leak')
+      .send({ cpf: '11111111111' });
+
+    const { wasLeaked, leak: savedLeak } = response.body;
+
+    expect(response.status).toBe(200);
+    expect(wasLeaked).toEqual(false);
+    expect(savedLeak).toEqual({});
+  });
+
+  it('should return an error when passing an invalid cpf', async () => {
+    const response = await global.testRequest.post('/api/leak').send();
+    expect(response.body).toEqual({
+      message: 'You have to pass a CPF',
+      code: 400,
+    });
   });
 });

@@ -11,9 +11,7 @@ export class LeakController {
       const { cpf } = req?.body;
 
       if (!cpf) {
-        res
-          .status(400)
-          .send({ message: 'You have to pass a valid CPF', code: 400 });
+        res.status(400).send({ message: 'You have to pass a CPF', code: 400 });
         return;
       }
 
