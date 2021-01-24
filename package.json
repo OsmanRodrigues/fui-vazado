@@ -10,7 +10,8 @@
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
     "test": "npm run style:check && jest --verbose --projects ./test --runInBand",
-    "worker": "ts-node worker/populate-db.worker.ts"
+    "worker": "ts-node worker/populate-db.worker.ts",
+    "migrate": "ts-node worker/migrate.worker.ts"
   },
   "author": "Felipe Amorim",
   "license": "GPL-3",
