@@ -10,4 +10,4 @@ RUN npm install --silent --no-progress
 
 COPY . $HOME/server
 
-ENTRYPOINT node $HOME/server/dist/src/index.js
+ENTRYPOINT npm run build && node $HOME/server/dist/src/index.js
