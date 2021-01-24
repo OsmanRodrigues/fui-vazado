@@ -1,13 +1,11 @@
 require('dotenv').config();
 
-export class Config {
-  public getEnv(env: string): string {
-    const res = process.env[env];
+export function getEnv(env: string): string {
+  const res = process.env[env];
 
-    if (res === undefined) {
-      return '';
-    }
-
-    return res;
+  if (res === undefined) {
+    return '';
   }
+
+  return res;
 }

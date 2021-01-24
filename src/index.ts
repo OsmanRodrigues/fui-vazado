@@ -1,13 +1,13 @@
+import 'reflect-metadata';
 import { Log } from './logger';
-import { Config } from './config';
 import { SetupServer } from './server';
+import * as config from './config';
 
 enum ExitStatus {
   Failure = 1,
   Success = 0,
 }
 const logger = new Log();
-const config = new Config();
 
 process.on('unhandledRejection', (reason, promise) => {
   logger.error(
@@ -26,7 +26,8 @@ process.on('uncaughtException', error => {
   try {
     const server = new SetupServer(
       +config.getEnv('PORT'),
-      config.getEnv('ENV')
+      config.getEnv('ENV'),
+      logger
     );
     await server.init();
     server.start();
