@@ -3,15 +3,18 @@
     "target": "es5",
     "module": "commonjs",
     "outDir": "./dist",
-    "rootDir": "./src",
     "strict": true,
     "moduleResolution": "node",
     "strictPropertyInitialization": false,
+    "esModuleInterop": true,
 
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
 
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  }
+    "forceConsistentCasingInFileNames": true,
+    "rootDirs": ["./src", "./test"]
+  },
+  "include": ["./src/**/*.ts", "./test/**/*.ts"],
+  "exclude": ["./node_modules/*", "dist"]
 }

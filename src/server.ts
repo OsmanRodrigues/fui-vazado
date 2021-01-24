@@ -1,4 +1,5 @@
 import * as bodyParser from 'body-parser';
+import { Application } from 'express';
 import { Server } from '@overnightjs/core';
 import { LeakController } from './controllers/leak.controller';
 import * as http from 'http';
@@ -11,12 +12,12 @@ export class SetupServer extends Server {
   private readonly logger: Log;
   private server?: http.Server;
 
-  constructor(port: number = 3000, environtment: string, logger: Log) {
+  constructor(port: number = 3000, environtment?: string, logger?: Log) {
     super(environtment === 'development'); // setting showLogs to true
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
     this.port = port;
-    this.logger = logger;
+    this.logger = logger ?? new Log();
   }
 
   private async databaseSetup(): Promise<void> {
@@ -27,6 +28,11 @@ export class SetupServer extends Server {
       password: config.getEnv('DB_PASSWORD'),
       database: config.getEnv('DB_NAME'),
     });
+    this.logger.info('Database connected!');
+  }
+
+  public getApp(): Application {
+    return this.app;
   }
 
   public async init(): Promise<void> {

@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { LeakDatasource } from '../models/datasources/leak.datasource';
 import { Log } from '../logger';
 
-@Controller('api/checkLeak')
+@Controller('api/leak')
 export class LeakController {
   @Post()
   public async checkLeak(req: Request, res: Response): Promise<void> {
@@ -20,7 +20,7 @@ export class LeakController {
       const datasource = new LeakDatasource();
       const leak = await datasource.findOneByCPF(cpf);
 
-      res.status(201).send({ wasLeaked: !!leak?.cpf, leak });
+      res.status(200).send({ wasLeaked: !!leak?.cpf, leak });
     } catch (error) {
       const logger = new Log();
       logger.error(
