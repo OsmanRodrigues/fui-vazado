@@ -4,12 +4,13 @@
   "description": "My personal nodejs setup for typescript projects",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/src/index.js",
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "style:check": "prettier --check 'src/**/*.ts' 'test/**/*.ts'",
     "style:fix": "prettier --write 'src/**/*.ts' 'test/**/*.ts'",
-    "test": "npm run style:check && jest --verbose --projects ./test --runInBand"
+    "test": "npm run style:check && jest --verbose --projects ./test --runInBand",
+    "worker": "ts-node worker/populate-db.worker.ts"
   },
   "author": "Felipe Amorim",
   "license": "MIT",

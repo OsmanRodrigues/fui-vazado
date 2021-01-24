@@ -60,7 +60,7 @@ export class LeakEntity {
   hasAnalytical: boolean;
 
   @Column()
-  PurchasingPower: boolean;
+  hasPurchasingPower: boolean;
 
   @Column()
   hasPhoto: boolean;
@@ -94,6 +94,9 @@ export class LeakEntity {
 
   @Column()
   hasSalary: boolean;
+
+  @Column()
+  hasIncome: boolean;
 
   @Column()
   hasDeceased: boolean;
