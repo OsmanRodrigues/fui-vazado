@@ -2,9 +2,23 @@ services:
   db:
     image: postgres:13
     env_file: .env
+    container_name: fui-vazado-db
+    restart: always
     environment:
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: ${DB_NAME}
     ports:
       - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+  app:
+    build:
+      context: .
+    depends_on:
+      - db
+    container_name: fui-vazado
+    restart: always
+    env_file: .env
+    ports:
+      - "127.0.0.1:3333:${PORT}"
