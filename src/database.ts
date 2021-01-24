@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { createConnection, Connection, getConnection } from 'typeorm';
-import { LeakEntity } from './entities/leak.entity';
+import { LeakEntity } from './models/entities/leak.entity';
 
 interface Args {
   host: string;

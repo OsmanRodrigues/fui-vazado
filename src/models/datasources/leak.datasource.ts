@@ -9,11 +9,10 @@ export class LeakDatasource {
     this.repository = repository;
   }
 
-  public async findOneByCPF(cpf: string): Promise<LeakEntity> {
+  public async findOneByCPF(cpf: string): Promise<LeakEntity | null> {
     const leak = await this.repository.findOne({ cpf });
-
     if (!leak) {
-      throw new Error(' aasd');
+      return new LeakEntity();
     }
 
     return leak;

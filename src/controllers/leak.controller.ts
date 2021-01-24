@@ -1,20 +1,35 @@
 import { Controller, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
-//import { Beach } from '@src/models/beach';
-//import { authMiddleware } from '@src/middlewares/auth';
-//import { BaseController } from '.';
+import { LeakDatasource } from '../models/datasources/leak.datasource';
+import { Log } from '../logger';
 
 @Controller('api/checkLeak')
-//@ClassMiddleware(authMiddleware) extends BaseController {
 export class LeakController {
   @Post()
   public async checkLeak(req: Request, res: Response): Promise<void> {
     try {
-      //const leak = await Beach.find({ user: req.decoded?.id });
-      res.status(201).send({ leaked: true });
+      const { cpf } = req?.body;
+
+      if (!cpf) {
+        res
+          .status(400)
+          .send({ message: 'You have to pass a valid CPF', code: 400 });
+        return;
+      }
+
+      const datasource = new LeakDatasource();
+      const leak = await datasource.findOneByCPF(cpf);
+
+      res.status(201).send({ wasLeaked: !!leak?.cpf, leak });
     } catch (error) {
-      console.error(error.message);
-      //this.sendCreateUpdateErrorResponse(res, error);
+      const logger = new Log();
+      logger.error(
+        `Error while looking for cpf ${req?.body} in database: ${error.message}`
+      );
+      res.status(500).send({
+        message: 'Oops, something went wrong ¯_(ツ)_/¯',
+        code: 500,
+      });
     }
   }
 }
