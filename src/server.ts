@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import { Application } from 'express';
 import { Server } from '@overnightjs/core';
 import { LeakController } from './controllers/leak.controller';
+import cors from 'cors';
 import * as http from 'http';
 import * as database from './database';
 import * as config from './config';
@@ -21,6 +22,7 @@ export class SetupServer extends Server {
   }
 
   private async databaseSetup(): Promise<void> {
+    this.setupExpress();
     await database.connect({
       host: config.getEnv('DB_HOST'),
       port: +config.getEnv('DB_PORT'),
@@ -29,6 +31,14 @@ export class SetupServer extends Server {
       database: config.getEnv('DB_NAME'),
     });
     this.logger.info('Database connected!');
+  }
+
+  private setupExpress(): void {
+    this.app.use(
+      cors({
+        origin: '*',
+      })
+    );
   }
 
   public getApp(): Application {
