@@ -103,6 +103,10 @@
         margin-top: 50px;
       }
 
+      .spinner-border {
+        display: none;
+      }
+
       font-family: 'Roboto', sans-serif;
     </style>
     <title>Fui Vazado</title>
@@ -140,6 +144,10 @@
 
     <div class="leaking-answer">
       <h2 id="was-leaked"></h2>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div id="spinner-id" class="spinner-border" role="status"></div>
     </div>
 
     <div id="leaking-list-id" class="leaking-list">
@@ -283,7 +291,8 @@
           <p>
             Esse site não busca reinventar a roda. Se você quer ficar a par dos
             principais vazamentos que podem estar relacionados a você, dê uma
-            olhada no <a href="https://haveibeenpwned.com">have i been pwned</a>, é um
+            olhada no
+            <a href="https://haveibeenpwned.com">have i been pwned</a>, é um
             serviço muito interessante.
           </p>
         </div>
@@ -301,6 +310,7 @@
 
         const endPoint = 'http://localhost:3000/api/leak';
         const cpf = document.getElementById('cpf-input').value;
+        document.getElementById('spinner-id').style.display = 'inline-block';
         const response = await fetch(endPoint, {
           method: 'POST',
           body: JSON.stringify({ cpf }),
@@ -311,6 +321,7 @@
 
         const data = await response.json();
         const element = document.getElementById('was-leaked');
+        document.getElementById('spinner-id').style.display = 'none';
 
         if (data.wasLeaked) {
           element.textContent = 'Sim, seus dados foram comprometidos!';
