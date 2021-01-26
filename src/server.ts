@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import { Application } from 'express';
 import { Server } from '@overnightjs/core';
 import { LeakController } from './controllers/leak.controller';
+import { PublicController } from './controllers/public.controller';
 import cors from 'cors';
 import * as http from 'http';
 import * as database from './database';
@@ -33,6 +34,7 @@ export class SetupServer extends Server {
   private setupExpress(): void {
     this.app.use(bodyParser.json());
     this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.set('trust proxy', true);
     this.app.use(
       cors({
         origin: '*',
@@ -47,7 +49,8 @@ export class SetupServer extends Server {
   public async init(): Promise<void> {
     this.setupExpress();
     const leakController = new LeakController();
-    super.addControllers([leakController]);
+    const publicController = new PublicController();
+    super.addControllers([leakController, publicController]);
     await this.databaseSetup();
   }
 
