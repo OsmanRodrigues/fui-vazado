@@ -29,12 +29,20 @@
       }
 
       .mb-1 {
+        display: flex;
         margin: 0 auto;
       }
 
       .input-div {
         width: 93%;
         float: left;
+      }
+
+      input:required {
+        box-shadow: none;
+      }
+      input:invalid {
+        box-shadow: 0 0 3px #0d6efd;
       }
 
       .btn,
@@ -55,6 +63,11 @@
         border-radius: 5px 0px 0px 5px;
       }
 
+      .input-div:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
       .header {
         padding-top: 30px;
         padding-bottom: 20px;
@@ -62,13 +75,32 @@
         font-size: 20px;
       }
 
-      .news {
+      .news,
+      .page-header {
         text-decoration: none;
       }
 
-      *,
-      ::after,
-      ::before {
+      .page-header,
+      .page-header:hover {
+        color: #212529;
+      }
+
+      .leaking-list {
+        margin-top: 30px;
+      }
+
+      .leaking-answer {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      .list-group-item {
+        display: none;
+      }
+
+      .faq {
+        display: none;
+        margin-top: 50px;
       }
 
       font-family: 'Roboto', sans-serif;
@@ -77,7 +109,7 @@
   </head>
   <body>
     <div class="header">
-      <h1 id="header-id">Fui Vazado?</h1>
+      <a class="page-header" href=""><h1 id="header-id">Fui Vazado?</h1></a>
       <p>
         Verifique abaixo se seu CPF está na lista de
         <a
@@ -94,7 +126,7 @@
         <input
           type="email"
           class="form-control"
-          id="exampleInputEmail1"
+          id="cpf-input"
           aria-describedby="emailHelp"
           placeholder="Seu CPF"
         />
@@ -106,18 +138,329 @@
       </div>
     </div>
 
+    <div class="leaking-answer">
+      <h2 id="was-leaked"></h2>
+    </div>
+
+    <div id="leaking-list-id" class="leaking-list">
+      <ul class="list-group list-group-flush">
+        <li id="hasCpf" class="list-group-item">CPF</li>
+        <li id="hasBasicInformation" class="list-group-item">
+          Informações "básicas": nome, CPF, gênero, data de nascimento, nome do
+          pai, nome da mãe
+        </li>
+        <li id="hasEmail" class="list-group-item">Email</li>
+        <li id="hasPhoneNumber" class="list-group-item">Número de telefone</li>
+        <li id="hasAddress" class="list-group-item">Endereço</li>
+        <li id="hasMosaic" class="list-group-item">
+          Grupo e subgrupo de segmentação
+        </li>
+        <li id="hasOccupation" class="list-group-item">Ocupação</li>
+        <li id="hasCreditScore" class="list-group-item">Score de crédito</li>
+        <li id="hasRG" class="list-group-item">RG</li>
+        <li id="hasVoterTitleCard" class="list-group-item">
+          Título de eleitor
+        </li>
+        <li id="hasEducationLevel" class="list-group-item">
+          Nível de escolaridade
+        </li>
+        <li id="hasBusinessPartners" class="list-group-item">
+          Empresarial: nome do sócio de uma empresa, participação (ações e %),
+          razão social e nome fantasia da empresa, CNPJ, data de entrada na
+          sociedade
+        </li>
+        <li id="hasIRPF" class="list-group-item">
+          Imposto de Renda: nome da instituição bancária, código da agência,
+          lote de restituição
+        </li>
+        <li id="hasSocialClassLevel" class="list-group-item">
+          Classe social (A1, A2, B1, B2, C1, C2, D, E)
+        </li>
+        <li id="hasMaritalStatus" class="list-group-item">Estado civil</li>
+        <li id="hasEmployment" class="list-group-item">
+          Emprego: CNPJ e razão social do empregador, número do PIS/PASEP/NIT,
+          número do CTPS, tipo de vínculo (CLT, autônomo, servidor, aprendiz
+          etc.), data de admissão, salário, horas de trabalho por semana
+        </li>
+        <li id="hasAffinityModel" class="list-group-item">
+          Afinidade: nível de precisão dos dados
+        </li>
+        <li id="hasAnalytical" class="list-group-item">
+          Modelo analítico: prevê chance de consumidor ter afinidade para
+          comprar um produto ou serviço
+        </li>
+        <li id="hasPurchasingPower" class="list-group-item">
+          Poder aquisitivo: nível (baixo, médio, alto), renda, salário
+        </li>
+        <li id="hasPhoto" class="list-group-item">Fotos de rosto</li>
+        <li id="hasPublicServants" class="list-group-item">
+          Servidores públicos: descrição do cargo, lotação, exercício, renda
+          bruta, estado, vínculo, afastamento (sim / não)
+        </li>
+        <li id="hasChecksWithNoFunds" class="list-group-item">
+          Cheques sem fundos: código e agência do banco, motivo (sem fundos /
+          conta encerrada)
+        </li>
+        <li id="isDebtor" class="list-group-item">
+          devedor: nome, tipo do devedor (principal, corresponsável), situação
+          (ativa, em cobrança, ajuizada), tipo de dívida (multa, imposto de
+          renda, PIS etc.), valor, foi parar na Justiça? (sim / não)
+        </li>
+        <li id="isInFamilyGrantProgram" class="list-group-item">
+          Bolsa Família: valor, situação do benefício (liberado / bloqueado),
+          status do benefício (ativo / inativo), número e nome dos dependentes,
+          NIS (Número de Identificação Social)
+        </li>
+        <li id="hasUniversity" class="list-group-item">
+          Universidade: nome da faculdade, curso, ano de entrada e ano de
+          conclusão
+        </li>
+        <li id="hasAdvicers" class="list-group-item">
+          Conselhos: pessoas que prestam consultoria no âmbito público ou
+          privado, incluindo situação, especialidade e código de ocupação
+        </li>
+        <li id="hasHouseholds" class="list-group-item">
+          Domicílio: CPF do chefe de família, número de pessoas, faixa de renda,
+          endereço completo
+        </li>
+        <li id="hasLinkages" class="list-group-item">
+          Vínculo familiar: ategoriza pessoas de acordo com vínculo de 1º grau
+          (mãe, pai, filho, filha, irmão, irmã, cônjuge) ou 2º grau (avô, neto,
+          tio, sobrinho, primo etc.)
+        </li>
+        <li id="hasLinkedIn" class="list-group-item">
+          LinkedIn: perfil na rede social com número ID e URL de acesso
+        </li>
+        <li id="hasSalary" class="list-group-item">
+          Salário: valor, tipo (mensal, quinzenal, semanal etc.), horas por
+          semana
+        </li>
+        <li id="hasIncome" class="list-group-item">
+          Renda: valor mensal (inclui salário, aluguéis, recebimento de juros
+          etc.), classe social (baixa, média, alta), faixa de renda
+        </li>
+        <li id="hasDeceased" class="list-group-item">
+          Óbito: data de falecimento, idade, data da certidão de óbito, nome e
+          endereço do cartório
+        </li>
+        <li id="hasInternalRevenueService" class="list-group-item">
+          Receita Federal: situação cadastral (regular / suspensa / cancelada /
+          titular falecido)
+        </li>
+        <li id="hasINSS" class="list-group-item">
+          INSS: nome do segurado, número do benefício, data de início, espécie
+          (aposentadoria, pensão, salário-maternidade etc.)
+        </li>
+        <li id="hasFGTS" class="list-group-item">FGTS: número do PIS</li>
+        <li id="hasCNS" class="list-group-item">
+          CNS (Cartão Nacional de Saúde)
+        </li>
+        <li id="hasNIS" class="list-group-item">
+          NIS (Número de Identificação Social)
+        </li>
+        <li id="hasPIS" class="list-group-item">PIS/PASEP</li>
+
+        <div id="faq-id" , class="faq">
+          <h2>Devo me preocupar?</h2>
+
+          <p>
+            Possivelmente. Há alguma chance que a partir de agora você passe a
+            receber tentativas de golpes e, quem sabe, ter seus dados utilizados
+            em crimes envolvendo alguma fraude.
+          </p>
+          <h2>E o que eu faço agora?</h2>
+          <p>
+            Difícil dizer exatamente agora que já foi vazado. Acredito que o que
+            pode se fazer é prestar atenção quanto a fraudes envolvendo seus
+            dados e, principalmente, tomar bastante cuidado com a coleta de
+            informação que você é submetido (não dar CPF para comprar em
+            farmácia, por exemplo). Talvez ajude registrar um boletim de
+            ocorrência para chamar a atenção de autoridades. Hoje em dia
+            acredito que a maioria das delegacias já oferecem a possibilidade de
+            realizar essa ação online.
+          </p>
+          <h2>Fique ligado</h2>
+          <p>
+            Esse site não busca reinventar a roda. Se você quer ficar a par dos
+            principais vazamentos que podem estar relacionados a você, dê uma
+            olhada no <a href="https://haveibeenpwned.com">have i been pwned</a>, é um
+            serviço muito interessante.
+          </p>
+        </div>
+      </ul>
+    </div>
+
     <script>
       async function checkLeak() {
-        const endPoint = 'http://localhost:3333/api/leak';
+        document.getElementById('faq-id').style.display = 'none';
+        const list = document.getElementsByClassName('list-group-item');
+
+        for (const row of list) {
+          row.style.display = 'none';
+        }
+
+        const endPoint = 'http://localhost:3000/api/leak';
+        const cpf = document.getElementById('cpf-input').value;
         const response = await fetch(endPoint, {
           method: 'POST',
-          body: { cpf: '23234324234' },
+          body: JSON.stringify({ cpf }),
           headers: {
             'Content-Type': 'application/json',
-          }
+          },
         });
-        const myJson = await response.json();
-        console.log(myJson);
+
+        const data = await response.json();
+        const element = document.getElementById('was-leaked');
+
+        if (data.wasLeaked) {
+          element.textContent = 'Sim, seus dados foram comprometidos!';
+          document.getElementById('faq-id').style.display = 'block';
+
+          document.getElementById('hasCpf').style.display = data.leak.cpf
+            ? 'block'
+            : 'none';
+          document.getElementById('hasBasicInformation').style.display = data
+            .leak.hasBasicInformation
+            ? 'block'
+            : 'none';
+          document.getElementById('hasEmail').style.display = data.leak.hasEmail
+            ? 'block'
+            : 'none';
+          document.getElementById('hasPhoneNumber').style.display = data.leak
+            .hasPhoneNumber
+            ? 'block'
+            : 'none';
+          document.getElementById('hasAddress').style.display = data.leak
+            .hasAddress
+            ? 'block'
+            : 'none';
+          document.getElementById('hasMosaic').style.display = data.leak
+            .hasMosaic
+            ? 'block'
+            : 'none';
+          document.getElementById('hasOccupation').style.display = data.leak
+            .hasOccupation
+            ? 'block'
+            : 'none';
+          document.getElementById('hasCreditScore').style.display = data.leak
+            .hasCreditScore
+            ? 'block'
+            : 'none';
+          document.getElementById('hasRG').style.display = data.leak.hasRG
+            ? 'block'
+            : 'none';
+          document.getElementById('hasVoterTitleCard').style.display = data.leak
+            .hasVoterTitleCard
+            ? 'block'
+            : 'none';
+          document.getElementById('hasEducationLevel').style.display = data.leak
+            .hasEducationLevel
+            ? 'block'
+            : 'none';
+          document.getElementById('hasBusinessPartners').style.display = data
+            .leak.hasBusinessPartners
+            ? 'block'
+            : 'none';
+          document.getElementById('hasIRPF').style.display = data.leak.hasIRPF
+            ? 'block'
+            : 'none';
+          document.getElementById('hasSocialClassLevel').style.display = data
+            .leak.hasSocialClassLevel
+            ? 'block'
+            : 'none';
+          document.getElementById('hasMaritalStatus').style.display = data.leak
+            .hasMaritalStatus
+            ? 'block'
+            : 'none';
+          document.getElementById('hasEmployment').style.display = data.leak
+            .hasEmployment
+            ? 'block'
+            : 'none';
+          document.getElementById('hasAffinityModel').style.display = data.leak
+            .hasAffinityModel
+            ? 'block'
+            : 'none';
+          document.getElementById('hasAnalytical').style.display = data.leak
+            .hasAnalytical
+            ? 'block'
+            : 'none';
+          document.getElementById('hasPurchasingPower').style.display = data
+            .leak.hasPurchasingPower
+            ? 'block'
+            : 'none';
+          document.getElementById('hasPhoto').style.display = data.leak.hasPhoto
+            ? 'block'
+            : 'none';
+          document.getElementById('hasPublicServants').style.display = data.leak
+            .hasPublicServants
+            ? 'block'
+            : 'none';
+          document.getElementById('hasChecksWithNoFunds').style.display = data
+            .leak.hasChecksWithNoFunds
+            ? 'block'
+            : 'none';
+          document.getElementById('isDebtor').style.display = data.leak.isDebtor
+            ? 'block'
+            : 'none';
+          document.getElementById('isInFamilyGrantProgram').style.display = data
+            .leak.isInFamilyGrantProgram
+            ? 'block'
+            : 'none';
+          document.getElementById('hasUniversity').style.display = data.leak
+            .hasUniversity
+            ? 'block'
+            : 'none';
+          document.getElementById('hasAdvicers').style.display = data.leak
+            .hasAdvicers
+            ? 'block'
+            : 'none';
+          document.getElementById('hasHouseholds').style.display = data.leak
+            .hasHouseholds
+            ? 'block'
+            : 'none';
+          document.getElementById('hasLinkages').style.display = data.leak
+            .hasLinkages
+            ? 'block'
+            : 'none';
+          document.getElementById('hasLinkedIn').style.display = data.leak
+            .hasLinkedIn
+            ? 'block'
+            : 'none';
+          document.getElementById('hasSalary').style.display = data.leak
+            .hasSalary
+            ? 'block'
+            : 'none';
+          document.getElementById('hasIncome').style.display = data.leak
+            .hasIncome
+            ? 'block'
+            : 'none';
+          document.getElementById('hasDeceased').style.display = data.leak
+            .hasDeceased
+            ? 'block'
+            : 'none';
+          document.getElementById(
+            'hasInternalRevenueService'
+          ).style.display = data.leak.hasInternalRevenueService
+            ? 'block'
+            : 'none';
+          document.getElementById('hasINSS').style.display = data.leak.hasINSS
+            ? 'block'
+            : 'none';
+          document.getElementById('hasFGTS').style.display = data.leak.hasFGTS
+            ? 'block'
+            : 'none';
+          document.getElementById('hasCNS').style.display = data.leak.hasCNS
+            ? 'block'
+            : 'none';
+          document.getElementById('hasNIS').style.display = data.leak.hasNIS
+            ? 'block'
+            : 'none';
+          document.getElementById('hasPIS').style.display = data.leak.hasPIS
+            ? 'block'
+            : 'none';
+        } else {
+          element.textContent = 'Não, seus dados não foram comprometidos :)';
+        }
       }
     </script>
     <script

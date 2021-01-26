@@ -15,14 +15,11 @@ export class SetupServer extends Server {
 
   constructor(port: number = 3000, environtment?: string, logger?: Log) {
     super(environtment === 'development'); // setting showLogs to true
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: true }));
     this.port = port;
     this.logger = logger ?? new Log();
   }
 
   private async databaseSetup(): Promise<void> {
-    this.setupExpress();
     await database.connect({
       host: config.getEnv('DB_HOST'),
       port: +config.getEnv('DB_PORT'),
@@ -34,6 +31,8 @@ export class SetupServer extends Server {
   }
 
   private setupExpress(): void {
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: true }));
     this.app.use(
       cors({
         origin: '*',
@@ -46,6 +45,7 @@ export class SetupServer extends Server {
   }
 
   public async init(): Promise<void> {
+    this.setupExpress();
     const leakController = new LeakController();
     super.addControllers([leakController]);
     await this.databaseSetup();
