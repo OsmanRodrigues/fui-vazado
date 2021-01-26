@@ -1,10 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 
 @Entity()
 export class LeakEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Index()
   @Column({ length: 11 })
   cpf: string;
 
