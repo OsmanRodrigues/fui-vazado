@@ -2,6 +2,7 @@ import * as bodyParser from 'body-parser';
 import { Application } from 'express';
 import { Server } from '@overnightjs/core';
 import { LeakController } from './controllers/leak.controller';
+import cors from 'cors';
 import * as http from 'http';
 import * as database from './database';
 import * as config from './config';
@@ -14,8 +15,6 @@ export class SetupServer extends Server {
 
   constructor(port: number = 3000, environtment?: string, logger?: Log) {
     super(environtment === 'development'); // setting showLogs to true
-    this.app.use(bodyParser.json());
-    this.app.use(bodyParser.urlencoded({ extended: true }));
     this.port = port;
     this.logger = logger ?? new Log();
   }
@@ -31,11 +30,22 @@ export class SetupServer extends Server {
     this.logger.info('Database connected!');
   }
 
+  private setupExpress(): void {
+    this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({ extended: true }));
+    this.app.use(
+      cors({
+        origin: '*',
+      })
+    );
+  }
+
   public getApp(): Application {
     return this.app;
   }
 
   public async init(): Promise<void> {
+    this.setupExpress();
     const leakController = new LeakController();
     super.addControllers([leakController]);
     await this.databaseSetup();
