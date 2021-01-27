@@ -274,7 +274,11 @@
           <p>
             Possivelmente. Há alguma chance que a partir de agora você passe a
             receber tentativas de golpes e, quem sabe, ter seus dados utilizados
-            em crimes envolvendo alguma fraude.
+            em crimes envolvendo alguma fraude. Ainda, é importante sabermos que
+            cada item da lista acima representa um grupo de dados. Por exemplo,
+            "Número de telefone" na verdade é um grupo de dados relacionados ao
+            seu telefone, como operadora, plano, tipo de linha, etc. Por isso
+            esse vazamento é imenso e deve ser tratado com atenção.
           </p>
           <h2>E o que eu faço agora?</h2>
           <p>
@@ -308,7 +312,7 @@
           row.style.display = 'none';
         }
 
-        const endPoint = 'http://localhost:3000/api/leak';
+        const endPoint = 'http://localhost:3333/api/leak';
         const cpf = document.getElementById('cpf-input').value;
         document.getElementById('spinner-id').style.display = 'inline-block';
         const response = await fetch(endPoint, {
