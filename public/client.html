@@ -125,22 +125,28 @@
       </p>
     </div>
 
-    <div class="mb-1">
+    <form id="vazei-search-form" class="mb-1" onsubmit="checkLeak(event)">
       <div class="input-div">
         <input
-          type="email"
+          title="Insira apenas os 11 números do CPF. "
+          required="true"
+          form="vazei-search-form"
+          type="text"
+          maxlength="11"
+          minlength="11"
+          pattern="[0-9]{11}"
           class="form-control"
           id="cpf-input"
           aria-describedby="emailHelp"
-          placeholder="Seu CPF"
+          placeholder="Seu CPF (apenas números)"
         />
       </div>
       <div class="button-div">
-        <button class="btn btn-primary" onclick="checkLeak()">
+        <button form="vazei-search-form" class="btn btn-primary">
           <b>Vazei?</b>
         </button>
       </div>
-    </div>
+    </form>
 
     <div class="leaking-answer">
       <h2 id="was-leaked"></h2>
@@ -304,7 +310,9 @@
     </div>
 
     <script>
-      async function checkLeak() {
+      async function checkLeak(event) {
+        event.preventDefault();
+
         document.getElementById('faq-id').style.display = 'none';
         const list = document.getElementsByClassName('list-group-item');
 
